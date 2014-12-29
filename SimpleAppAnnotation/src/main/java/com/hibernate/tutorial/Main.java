@@ -22,6 +22,7 @@ public class Main {
 			System.out.println(+z.getId() + "," + z.getZipCode());
 		}
 
+		//
 		// close session
 		HibernatePersistence.shutdown();
 	}
