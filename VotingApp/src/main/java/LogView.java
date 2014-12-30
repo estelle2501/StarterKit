@@ -61,6 +61,7 @@ public class LogView extends JPanel implements ActionListener {
 
 		JLabel labelPesel = new JLabel("PESEL", LABEL_LENGHT);
 		textPesel = new PeselField();
+		textPesel.addListener();
 
 		panelPesel.add(labelPesel);
 		panelPesel.add(textPesel);
