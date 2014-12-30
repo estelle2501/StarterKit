@@ -1,20 +1,22 @@
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.text.MaskFormatter;
 
-public class LogView extends JPanel {
+public class LogView extends JPanel implements ActionListener {
 
-	private static final int PESEL_LENGTH = 11;
 	private static final int LABEL_LENGHT = 10;
 	private AppFrame appFrame;
+	JButton buttonLogin;
+	PeselField textPesel;
+	
 
 	public LogView(AppFrame aFrame) {
 		appFrame = aFrame;
@@ -29,6 +31,7 @@ public class LogView extends JPanel {
 		this.addPanelPesel();
 		this.addPanelLogin();
 		appFrame.getContentPane().revalidate();
+		
 	}
 
 	// adding ZipCode panel
@@ -55,10 +58,9 @@ public class LogView extends JPanel {
 		JPanel panelPesel = new JPanel();
 		this.add(panelPesel);
 		panelPesel.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 10));
+
 		JLabel labelPesel = new JLabel("PESEL", LABEL_LENGHT);
-		JFormattedTextField textPesel = new JFormattedTextField(
-				createFormatter("###########"));
-		textPesel.setColumns(PESEL_LENGTH);
+		textPesel = new PeselField();
 
 		panelPesel.add(labelPesel);
 		panelPesel.add(textPesel);
@@ -69,20 +71,22 @@ public class LogView extends JPanel {
 		JPanel panelLogin = new JPanel();
 		this.add(panelLogin);
 		panelLogin.setLayout(new FlowLayout());
-		JButton buttonLogin = new JButton("Login");
+		buttonLogin = new JButton("Login");
+		buttonLogin.addActionListener(this);
 		panelLogin.add(buttonLogin);
 
 	}
 
-	// creating Formatter to Pesel text field
-	protected MaskFormatter createFormatter(String s) {
-		MaskFormatter formatter = null;
-		try {
-			formatter = new MaskFormatter(s);
-		} catch (java.text.ParseException exc) {
-			System.err.println("Nieprawidlowy PESEL");
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == buttonLogin) {
+//			enteredPesel = textPesel.getText();			
+//			System.out.println(enteredPesel);
+//			
+			if (textPesel.PeselValidate()) {
+				VoteView voteView = new VoteView(appFrame);
+			}
 		}
-		return formatter;
+
 	}
 
 }

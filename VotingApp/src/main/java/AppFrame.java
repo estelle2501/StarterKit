@@ -2,13 +2,13 @@ import javax.swing.JFrame;
 
 public class AppFrame extends JFrame {
 
-	public AppFrame(){
+	public AppFrame() {
 		super("Login");
 		initAppFrame();
 	}
 
+	// creating Application's Frame
 	private void initAppFrame() {
-		//creating Application's Frame
 		this.setSize(600, 300);
 		this.setLocationRelativeTo(null);
 		this.setMinimumSize(getSize());
