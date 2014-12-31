@@ -15,6 +15,7 @@ public class VoteView extends JPanel {
 		initVoteView(appFrame);
 	}
 
+	// initializing VoteView with Candidate and Vote Panels
 	private void initVoteView(AppFrame appFrame) {
 		appFrame.getContentPane().removeAll();
 		appFrame.setTitle("Okreg wyborczy");
@@ -26,22 +27,25 @@ public class VoteView extends JPanel {
 
 	}
 
+	// adding Vote Panel with Button Vote
 	private void addVotePanel() {
 		JPanel votePanel = new JPanel();
-		this.add(votePanel);		
+		this.add(votePanel);
 		votePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JButton buttonVote = new JButton("Glosuj");
 		votePanel.add(buttonVote);
 	}
 
+	// adding candidate panel
 	private void addCandidatePanel() {
 		JPanel candidatePanel = new JPanel();
 		this.add(candidatePanel);
 		addCandidatesButtons(candidatePanel);
 	}
 
+	// adding RadioButtons to candidate panel
 	private void addCandidatesButtons(JPanel candidatePanel) {
-		
+
 		candidatePanel.setLayout(new GridLayout(3, 1));
 
 		JRadioButton rBCandidate1 = new JRadioButton("Kandydat 1");

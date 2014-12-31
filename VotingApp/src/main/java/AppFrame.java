@@ -7,7 +7,7 @@ public class AppFrame extends JFrame {
 		initAppFrame();
 	}
 
-	// creating Application's Frame
+	// initializing Application's Frame
 	private void initAppFrame() {
 		this.setSize(600, 300);
 		this.setLocationRelativeTo(null);

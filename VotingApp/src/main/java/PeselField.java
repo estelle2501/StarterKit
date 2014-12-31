@@ -1,27 +1,22 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 
 public class PeselField extends JTextField {
 
 	private static final int PESEL_LENGTH = 11;
-
-	// private static final String PESEL_FORMAT = "###########";
 	private String enteredPesel;
 
-	// set pesel field to 11 digits formats
+	// set size of PESEL field
 	public PeselField() {
 		this.setColumns(PESEL_LENGTH);
 	}
 
-	// check if entered Pesel is valid
+	// check if entered PESEL is valid
 	public boolean PeselValidate() {
 		enteredPesel = this.getText();
+		System.out.println("Wprowadzono PESEL: " + enteredPesel);
 
-		System.out.println(enteredPesel);
-		// if (PeselNotEmpty(enteredPesel)) {
 		if (checkPeselLength(enteredPesel)) {
 			return true;
 		} else {
@@ -29,20 +24,18 @@ public class PeselField extends JTextField {
 		}
 	}
 
-	// }
-
-	// check if entered Pesel is 11 digits length
+	// check if entered PESEL is 11 digits length
 	private boolean checkPeselLength(String ePesel) {
-
 		if (ePesel.length() == PESEL_LENGTH) {
-			System.out.println("bhsadfksa");
 			return true;
 		} else {
+			System.out.println("Wprowadzono za krotki PESEL");
 			return false;
 		}
 
 	}
 
+	// allow only 11 digits in PESEl field
 	public void addListener() {
 		this.addKeyListener(new KeyListener() {
 

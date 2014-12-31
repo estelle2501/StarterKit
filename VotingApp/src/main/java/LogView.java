@@ -15,15 +15,14 @@ public class LogView extends JPanel implements ActionListener {
 	private static final int LABEL_LENGHT = 10;
 	private AppFrame appFrame;
 	JButton buttonLogin;
-	PeselField textPesel;
-	
+	PeselField peselField;
 
 	public LogView(AppFrame aFrame) {
 		appFrame = aFrame;
 		initLogView(appFrame);
 	}
 
-	// initializing Logging view
+	// initializing Logging view with ZipCode, Pesel and Login Panels
 	private void initLogView(AppFrame appFrame) {
 		appFrame.add(this);
 		this.setLayout(new GridLayout(3, 1));
@@ -31,7 +30,7 @@ public class LogView extends JPanel implements ActionListener {
 		this.addPanelPesel();
 		this.addPanelLogin();
 		appFrame.getContentPane().revalidate();
-		
+
 	}
 
 	// adding ZipCode panel
@@ -60,11 +59,11 @@ public class LogView extends JPanel implements ActionListener {
 		panelPesel.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 10));
 
 		JLabel labelPesel = new JLabel("PESEL", LABEL_LENGHT);
-		textPesel = new PeselField();
-		textPesel.addListener();
+		peselField = new PeselField();
+		peselField.addListener();
 
 		panelPesel.add(labelPesel);
-		panelPesel.add(textPesel);
+		panelPesel.add(peselField);
 	}
 
 	// adding Login panel
@@ -80,10 +79,7 @@ public class LogView extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonLogin) {
-//			enteredPesel = textPesel.getText();			
-//			System.out.println(enteredPesel);
-//			
-			if (textPesel.PeselValidate()) {
+			if (peselField.PeselValidate()) {
 				VoteView voteView = new VoteView(appFrame);
 			}
 		}
