@@ -13,14 +13,14 @@ public class Main {
 		AppFrame appFrame = new AppFrame();
 		LogView logView = new LogView(appFrame, session);
 
-//		Query query = session.createQuery("from ZipCodes");
-//
-//		List<ZipCodes> zipCodesList = query.list();
-//		for (ZipCodes z : zipCodesList) {
-//			System.out.println(+z.getId() + "," + z.getZipCode());
-//		}
+		Query query = session.createQuery("from Voters");
 
-		disconnectDB();
+		List<Voters> zipCodesList = query.list();
+		for (Voters z : zipCodesList) {
+			System.out.println(+z.getId() + "," + z.getPesel());
+		}
+
+//		disconnectDB();
 
 	}
 
