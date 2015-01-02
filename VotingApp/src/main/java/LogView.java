@@ -2,6 +2,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -10,15 +11,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 public class LogView extends JPanel implements ActionListener {
 
 	private static final int LABEL_LENGHT = 10;
 	private AppFrame appFrame;
 	JButton buttonLogin;
 	PeselField peselField;
+	Session session;
 
-	public LogView(AppFrame aFrame) {
+	public LogView(AppFrame aFrame, Session s) {
 		appFrame = aFrame;
+		session = s;
 		initLogView(appFrame);
 	}
 
@@ -39,12 +45,14 @@ public class LogView extends JPanel implements ActionListener {
 		JLabel labelZipCode = new JLabel("Kod Pocztowy", LABEL_LENGHT);
 		panelZipCode.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 10));
 		panelZipCode.add(labelZipCode);
-
 		// creating ScrollPane ZipCode
 		DefaultComboBoxModel<String> modelZipCode = new DefaultComboBoxModel<String>();
-		modelZipCode.addElement("");
-		modelZipCode.addElement("50-555");
-		modelZipCode.addElement("50-554");
+		// getting ZipCodes from ElectionsDB
+		Query query = session.createQuery("from ZipCodes");
+		List<ZipCodes> zipCodesList = query.list();
+		for (ZipCodes z : zipCodesList) {
+			modelZipCode.addElement(z.getZipCode());
+		}
 		JComboBox<String> comboZipCode = new JComboBox<String>(modelZipCode);
 		JScrollPane scrollZipCode = new JScrollPane(comboZipCode);
 		panelZipCode.add(scrollZipCode);

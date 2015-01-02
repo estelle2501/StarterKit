@@ -1,5 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class PeselField extends JTextField {
@@ -28,8 +30,12 @@ public class PeselField extends JTextField {
 	private boolean checkPeselLength(String ePesel) {
 		if (ePesel.length() == PESEL_LENGTH) {
 			return true;
-		} else {
+		} else if (ePesel.length()==0){
+			JOptionPane.showMessageDialog(null, "Podaj PESEL!");
 			System.out.println("Wprowadzono za krotki PESEL");
+			return false;
+		}else {
+			JOptionPane.showMessageDialog(null, "Wprowadzono za krotki PESEL");
 			return false;
 		}
 
