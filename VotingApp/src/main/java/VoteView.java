@@ -16,18 +16,18 @@ public class VoteView extends JPanel {
 	private String enteredZipCode;
 	private static final int AMOUNT_OF_CANDIDATES = 3;
 	private Session session;
-	
+
 	public VoteView(AppFrame aFrame, String eZipCode, Session s) {
 		appFrame = aFrame;
-		enteredZipCode=eZipCode;
-		session=s;
+		enteredZipCode = eZipCode;
+		session = s;
 		initVoteView(appFrame);
 	}
 
 	// initializing VoteView with Candidate and Vote Panels
 	private void initVoteView(AppFrame appFrame) {
 		appFrame.getContentPane().removeAll();
-		appFrame.setTitle("Okreg wyborczy " + enteredZipCode );
+		appFrame.setTitle("Okreg wyborczy " + enteredZipCode);
 		appFrame.add(this);
 		this.setLayout(new GridLayout(2, 1));
 		this.addCandidatePanel();
@@ -56,26 +56,30 @@ public class VoteView extends JPanel {
 	private void addCandidatesButtons(JPanel candidatePanel) {
 
 		candidatePanel.setLayout(new GridLayout(AMOUNT_OF_CANDIDATES, 1));
-		
-//		Query query = session
-//				.createQuery("from Candidates C where C.zipCode =:zipCode ");
-//		query.setParameter("zipCode", enteredZipCode);
-//
-//		List<Candidates> candidatesList = query.list();
-//		Candidates c1 = candidatesList.get(0);
-//		JRadioButton rBCandidate1 = new JRadioButton(c1.getFirstName() + " " + c1.getSurname());
-		JRadioButton rBCandidate1 = new JRadioButton("Kandydat 1");
-		JRadioButton rBCandidate2 = new JRadioButton("Kandydat 2");
-		JRadioButton rBCandidate3 = new JRadioButton("Kandydat 3");
-		
+	
+		Query query1 = session
+				.createQuery("from ZipCodes Z where Z.zipCode =:zipCode");
+		query1.setParameter("zipCode", enteredZipCode);
+		List<ZipCodes> zipCodeList = query1.list();
+		ZipCodes z = zipCodeList.get(0);
+		long zipCodeId = z.getId();
 
+		Query query = session
+				.createQuery("select C from Candidates as C where zip_codes_id =:zip_codes_id");
+		query.setParameter("zip_codes_id", zipCodeId);
+
+		List<Candidates> candidatesList = query.list();
+
+		JRadioButton rBCandidate;
 		ButtonGroup bGroupCandidates = new ButtonGroup();
-		bGroupCandidates.add(rBCandidate1);
-		bGroupCandidates.add(rBCandidate2);
-		bGroupCandidates.add(rBCandidate3);
-		candidatePanel.add(rBCandidate1);
-		candidatePanel.add(rBCandidate2);
-		candidatePanel.add(rBCandidate3);
+		// create radioButtons with Candidates from chosen ZipCode
+		for (int i = 0; i < AMOUNT_OF_CANDIDATES; i++) {
+			rBCandidate = new JRadioButton(candidatesList.get(i).getFirstName()
+					+ " " + candidatesList.get(i).getSurname());
+			bGroupCandidates.add(rBCandidate);
+			candidatePanel.add(rBCandidate);
+		}
+
 	}
 
 }

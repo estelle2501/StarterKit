@@ -47,26 +47,30 @@ public class PeselField extends JTextField {
 		List<ZipCodes> zipCodeList = query1.list();
 		ZipCodes z = zipCodeList.get(0);
 		long zipCodeId = z.getId();
-		System.out.println(zipCodeId);
-		System.out.println(enteredZipCode);
-		System.out.println(enteredPesel);
+		// System.out.println(zipCodeId);
+		// System.out.println(enteredZipCode);
+		// System.out.println(enteredPesel);
+
 		// check if PESEL has correct ZipCodeId
 		Query query2 = session
 				.createQuery("select V from Voters as V where zip_codes_id =:zip_codes_id and V.pesel =:pesel");
 		query2.setParameter("pesel", enteredPesel);
 		query2.setParameter("zip_codes_id", zipCodeId);
-
 		List<Voters> peselList = query2.list();
-		for (Voters v : peselList) {
-			System.out.println(v.getId() + "," + v.getPesel());
-		}
+
+		// for (Voters v : peselList) {
+		// System.out.println(v.getId() + "," + v.getPesel());
+		// }
 
 		if (peselList.isEmpty()) {
 			JOptionPane.showMessageDialog(null,
-					"Podany PESEL nie jest uprawniony do glosowania w okregu " + enteredZipCode );
+					"Podany PESEL nie jest uprawniony do glosowania w okregu "
+							+ enteredZipCode);
 			return false;
 		} else {
-			System.out.println("Podany PESEL jest uprawniony do glosowania w okregu " + enteredZipCode);
+			System.out
+					.println("Podany PESEL jest uprawniony do glosowania w okregu "
+							+ enteredZipCode);
 			return true;
 		}
 
