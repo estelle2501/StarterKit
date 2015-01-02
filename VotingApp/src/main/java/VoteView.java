@@ -1,24 +1,33 @@
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 public class VoteView extends JPanel {
 
 	private AppFrame appFrame;
-
-	public VoteView(AppFrame aFrame) {
+	private String enteredZipCode;
+	private static final int AMOUNT_OF_CANDIDATES = 3;
+	private Session session;
+	
+	public VoteView(AppFrame aFrame, String eZipCode, Session s) {
 		appFrame = aFrame;
+		enteredZipCode=eZipCode;
+		session=s;
 		initVoteView(appFrame);
 	}
 
 	// initializing VoteView with Candidate and Vote Panels
 	private void initVoteView(AppFrame appFrame) {
 		appFrame.getContentPane().removeAll();
-		appFrame.setTitle("Okreg wyborczy");
+		appFrame.setTitle("Okreg wyborczy " + enteredZipCode );
 		appFrame.add(this);
 		this.setLayout(new GridLayout(2, 1));
 		this.addCandidatePanel();
@@ -46,11 +55,19 @@ public class VoteView extends JPanel {
 	// adding RadioButtons to candidate panel
 	private void addCandidatesButtons(JPanel candidatePanel) {
 
-		candidatePanel.setLayout(new GridLayout(3, 1));
-
+		candidatePanel.setLayout(new GridLayout(AMOUNT_OF_CANDIDATES, 1));
+		
+//		Query query = session
+//				.createQuery("from Candidates C where C.zipCode =:zipCode ");
+//		query.setParameter("zipCode", enteredZipCode);
+//
+//		List<Candidates> candidatesList = query.list();
+//		Candidates c1 = candidatesList.get(0);
+//		JRadioButton rBCandidate1 = new JRadioButton(c1.getFirstName() + " " + c1.getSurname());
 		JRadioButton rBCandidate1 = new JRadioButton("Kandydat 1");
 		JRadioButton rBCandidate2 = new JRadioButton("Kandydat 2");
 		JRadioButton rBCandidate3 = new JRadioButton("Kandydat 3");
+		
 
 		ButtonGroup bGroupCandidates = new ButtonGroup();
 		bGroupCandidates.add(rBCandidate1);

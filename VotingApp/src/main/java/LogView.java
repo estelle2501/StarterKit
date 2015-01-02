@@ -21,6 +21,7 @@ public class LogView extends JPanel implements ActionListener {
 	JButton buttonLogin;
 	PeselField peselField;
 	Session session;
+	DefaultComboBoxModel<String> modelZipCode = new DefaultComboBoxModel<String>();
 
 	public LogView(AppFrame aFrame, Session s) {
 		appFrame = aFrame;
@@ -46,7 +47,7 @@ public class LogView extends JPanel implements ActionListener {
 		panelZipCode.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 10));
 		panelZipCode.add(labelZipCode);
 		// creating ScrollPane ZipCode
-		DefaultComboBoxModel<String> modelZipCode = new DefaultComboBoxModel<String>();
+		modelZipCode = new DefaultComboBoxModel<String>();
 		// getting ZipCodes from ElectionsDB
 		Query query = session.createQuery("from ZipCodes");
 		List<ZipCodes> zipCodesList = query.list();
@@ -86,9 +87,10 @@ public class LogView extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == buttonLogin) {
-			if (peselField.PeselValidate()) {
-				VoteView voteView = new VoteView(appFrame);
+		if (e.getSource() == buttonLogin) {	
+			String enteredZipCode = (String) modelZipCode.getSelectedItem();
+			if (peselField.PeselValidate(enteredZipCode)) {			
+				VoteView voteView = new VoteView(appFrame, enteredZipCode, session);
 			}
 		}
 
