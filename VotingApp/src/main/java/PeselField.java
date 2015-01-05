@@ -24,14 +24,21 @@ public class PeselField extends JTextField {
 	// check if entered PESEL is valid
 	public boolean PeselValidate(String enteredZipCode) {
 		enteredPesel = this.getText();
-		// System.out.println("Wprowadzono PESEL: " + enteredPesel);
-		if (checkPeselLength(enteredPesel)) {
+		PeselValidation pv = new PeselValidation(enteredPesel);
+		
+		if (pv.checkIfEmpty()) {
+			JOptionPane.showMessageDialog(null, "Podaj PESEL!");
+			return false;
+		}
+
+		if (pv.checkIfValidLength()) {
 			if (checkPeselInDB(enteredPesel, enteredZipCode)) {
 				return true;
 			} else {
 				return false;
 			}
 		} else {
+			JOptionPane.showMessageDialog(null, "Wprowadzono za krotki PESEL");
 			return false;
 		}
 
@@ -72,21 +79,6 @@ public class PeselField extends JTextField {
 					.println("Podany PESEL jest uprawniony do glosowania w okregu "
 							+ enteredZipCode);
 			return true;
-		}
-
-	}
-
-	// check if entered PESEL is 11 digits length
-	private boolean checkPeselLength(String ePesel) {
-		if (ePesel.length() == PESEL_LENGTH) {
-			return true;
-		} else if (ePesel.length() == 0) {
-			JOptionPane.showMessageDialog(null, "Podaj PESEL!");
-			System.out.println("Wprowadzono za krotki PESEL");
-			return false;
-		} else {
-			JOptionPane.showMessageDialog(null, "Wprowadzono za krotki PESEL");
-			return false;
 		}
 
 	}
